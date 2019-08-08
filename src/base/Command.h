@@ -15,7 +15,7 @@ namespace appimagelauncher {
         class Command {
         public:
             // Run the command.
-            virtual int exec(QList<QString> arguments) = 0;
+            virtual void exec(QList<QString> arguments) = 0;
         };
     }
 }

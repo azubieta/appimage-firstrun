@@ -23,8 +23,11 @@ namespace appimagelauncher {
 
             std::shared_ptr<Command> getCommandByName(const QString&) override;
 
+            void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) override;
+
         private:
             QApplication* application;
+            std::shared_ptr<AbstractLauncher> launcher;
         };
     }
 }

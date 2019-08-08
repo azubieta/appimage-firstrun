@@ -18,7 +18,7 @@ namespace appimagelauncher {
 
         void parseArguments(const QCoreApplication& qCoreApplication);
 
-        int exec();
+        void exec();
 
         void showHelp(int exitCode);
 

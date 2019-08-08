@@ -2,7 +2,7 @@ set(
     AppImageLauncherCommandsSources
     GuiCommandsFactory.cpp
     LaunchCommand.cpp
-    LaunchCommandAbstractUI.cpp
+    LaunchCommandAbstractAssistant.cpp
 )
 
 # Tell CMake to run moc when necessary:

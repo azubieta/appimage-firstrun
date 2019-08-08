@@ -1,12 +1,19 @@
 #pragma once
 
+// local
 #include "Command.h"
+#include "AbstractLauncher.h"
+#include "AbstractInspector.h"
 
 namespace appimagelauncher {
     namespace commands {
         class AbstractFactory {
         public:
             virtual std::shared_ptr<Command> getCommandByName(const QString&) = 0;
+
+            virtual void setLauncher(std::shared_ptr<AbstractLauncher> launcher) = 0;
+
+            virtual void setInspector(std::shared_ptr<AbstractInspector> launcher) = 0;
 
             virtual ~AbstractFactory() = default;
         };

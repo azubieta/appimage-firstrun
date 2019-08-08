@@ -2,21 +2,27 @@
 
 // local
 #include "Command.h"
-#include "LaunchCommandAbstractUI.h"
+#include "AbstractLauncher.h"
+#include "AbstractInspector.h"
+#include "LaunchCommandAbstractAssistant.h"
 
 namespace appimagelauncher {
     namespace commands {
         class LaunchCommand : public Command {
         public:
-            int exec(QList<QString> arguments) override;
+            void exec(QList<QString> arguments) override;
 
-            void setUi(LaunchCommandAbstractUI* ui);
+            void setUi(std::shared_ptr<LaunchCommandAbstractAssistant> ui);
+
+            void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher);
+
+            void setInspector(std::shared_ptr<AbstractInspector> newInspector);
 
         private:
             QString binaryPath;
-            LaunchCommandAbstractUI* ui = nullptr;
-
-            int doLaunch(const QString& path, const QList<struct QString>& arguments);
+            std::shared_ptr<LaunchCommandAbstractAssistant> ui = nullptr;
+            std::shared_ptr<AbstractLauncher> launcher;
+            std::shared_ptr<AbstractInspector> inspector;
 
             bool isAssistantDisabled();
         };

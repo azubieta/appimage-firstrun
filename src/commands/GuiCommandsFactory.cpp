@@ -11,10 +11,18 @@ namespace appimagelauncher {
         }
 
         std::shared_ptr<Command> GuiCommandsFactory::getCommandByName(const QString& commandName) {
-            if (commandName == "launch")
-                return std::make_shared<LaunchCommand>();
+            if (commandName == "launch") {
+                auto launchCommand = std::make_shared<LaunchCommand>();
+                launchCommand->setLauncher(launcher);
+                return launchCommand;
+            }
+
 
             throw CommandNotFoundError(commandName);
+        }
+
+        void GuiCommandsFactory::setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) {
+            GuiCommandsFactory::launcher = newLauncher;
         }
     }
 }

@@ -29,9 +29,9 @@ namespace appimagelauncher {
     }
 
 
-    int AppImageLauncher::exec() {
+    void AppImageLauncher::exec() {
         commandObj = commandsFactory->getCommandByName(commandName);
-        return commandObj->exec(positionalArguments);
+        commandObj->exec(positionalArguments);
     }
 
     void AppImageLauncher::parseArguments(const QCoreApplication& qCoreApplication) {

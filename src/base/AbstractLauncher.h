@@ -13,6 +13,12 @@ public:
      */
     virtual void launch(const QString& command, const QStringList& args) = 0;
 
+    virtual bool registerApp(const QString& appImagePath) = 0;
+
+    virtual bool unregisterApp(const QString& appImagePath) = 0;
+
+    virtual bool isRegistered(const QString& appImagePath) = 0;
+
 };
 
 
