@@ -20,7 +20,7 @@ namespace appimagelauncher {
             if (isAssistantDisabled())
                 launcher->launch(binaryPath, arguments);
             else
-                ui->show();
+                assistant->show();
         }
 
         bool LaunchCommand::isAssistantDisabled() {
@@ -47,8 +47,8 @@ namespace appimagelauncher {
             return false;
         }
 
-        void LaunchCommand::setUi(std::shared_ptr<LaunchCommandAbstractAssistant> newUi) {
-            LaunchCommand::ui = newUi;
+        void LaunchCommand::setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> assistant) {
+            LaunchCommand::assistant = assistant;
         }
 
         void LaunchCommand::setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) {

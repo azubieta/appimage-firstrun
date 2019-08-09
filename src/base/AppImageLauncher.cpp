@@ -1,9 +1,6 @@
 // libraries
 #include <QtCore/QFile>
 #include <QtCore/QDebug>
-#include <QtCore/QProcess>
-#include <QtCore/QCommandLineParser>
-
 
 // local
 #include "AppImageLauncher.h"
@@ -12,7 +9,8 @@
 #include "utils.h"
 
 namespace appimagelauncher {
-    AppImageLauncher::AppImageLauncher(int argc, char** argv) {
+
+    AppImageLauncher::AppImageLauncher(int argc, char** argv, QObject* parent) : QObject(parent) {
         /* copy original arguments could used later to launch a target app
          * arg 0 refers to the executable path therefore could be ignored */
         for (int i = 1; i < argc; ++i)
@@ -20,6 +18,7 @@ namespace appimagelauncher {
 
         initParser();
     }
+
 
     void AppImageLauncher::initParser() {
         parser.addPositionalArgument("<command>", "Command to run (see help for more information");
@@ -29,9 +28,20 @@ namespace appimagelauncher {
     }
 
 
-    void AppImageLauncher::exec() {
-        commandObj = commandsFactory->getCommandByName(commandName);
-        commandObj->exec(positionalArguments);
+    int AppImageLauncher::exec() {
+        try {
+            commandObj = commandsFactory->getCommandByName(commandName);
+            commandObj->exec(positionalArguments);
+        } catch (const commands::CommandNotFoundError& e) {
+            qCritical("%s", e.what());
+            showHelp(2);
+        } catch (const commands::InvalidArgumentsError& e) {
+            qCritical("Invalid arguments: %s", e.what());
+            showHelp(2);
+        } catch (const commands::UsageError& e) {
+            qCritical("Usage error:  %s", e.what());
+            showHelp(2);
+        }
     }
 
     void AppImageLauncher::parseArguments(const QCoreApplication& qCoreApplication) {
@@ -68,6 +78,9 @@ namespace appimagelauncher {
         AppImageLauncher::commandsFactory = commandsFactory;
     }
 
+    AppImageLauncher::~AppImageLauncher() {
+
+    }
 
     InvalidArguments::InvalidArguments(const QString& arg) : runtime_error(arg.toStdString()) {}
 }

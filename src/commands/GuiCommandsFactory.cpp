@@ -24,5 +24,10 @@ namespace appimagelauncher {
         void GuiCommandsFactory::setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) {
             GuiCommandsFactory::launcher = newLauncher;
         }
+
+        void GuiCommandsFactory::setInspector(std::shared_ptr<AbstractInspector> newInspector) {
+            GuiCommandsFactory::inspector = newInspector;
+
+        }
     }
 }

@@ -4,7 +4,11 @@
 #include <memory>
 
 // libraries
+#include <QObject>
+#include <QtCore/QCommandLineParser>
 #include <QCoreApplication>
+
+// local
 #include "AbstractFactory.h"
 
 namespace appimagelauncher {
@@ -12,17 +16,23 @@ namespace appimagelauncher {
         class Command;
     }
 
-    class AppImageLauncher {
+    class AppImageLauncher : public QObject {
+    Q_OBJECT
+
     public:
-        AppImageLauncher(int argc, char** argv);
+        AppImageLauncher(int argc, char** argv, QObject* parent = nullptr);
 
         void parseArguments(const QCoreApplication& qCoreApplication);
-
-        void exec();
 
         void showHelp(int exitCode);
 
         void setCommandsFactory(const std::shared_ptr<commands::AbstractFactory>& commandsFactory);
+
+        ~AppImageLauncher();
+
+    public slots:
+
+        int exec();
 
     private:
         QString commandName;

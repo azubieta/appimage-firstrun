@@ -13,7 +13,7 @@ namespace appimagelauncher {
 
             virtual void setLauncher(std::shared_ptr<AbstractLauncher> launcher) = 0;
 
-            virtual void setInspector(std::shared_ptr<AbstractInspector> launcher) = 0;
+            virtual void setInspector(std::shared_ptr<AbstractInspector> inspector) = 0;
 
             virtual ~AbstractFactory() = default;
         };

@@ -3,9 +3,15 @@
 #include <LaunchCommandAbstractAssistant.h>
 
 class LaunchCommandFakeAssistant : public LaunchCommandAbstractAssistant {
-Q_OBJECT
 public:
-    explicit LaunchCommandFakeAssistant(QObject* parent = nullptr) : LaunchCommandAbstractAssistant(parent) {}
+
+    void setTarget(const QString& appImagePath, const QStringList& args) override {
+
+    }
+
+    void setLauncher(std::shared_ptr<AbstractLauncher> launcher) override {
+
+    }
 
     void show() override {
         showRequested = true;

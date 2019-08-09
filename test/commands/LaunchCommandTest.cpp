@@ -24,7 +24,7 @@ private slots:
         launcher = std::make_shared<FakeLauncher>();
         inspector = std::make_shared<FakeInspector>();
 
-        launchCommand.setUi(assistant);
+        launchCommand.setAssistant(assistant);
         launchCommand.setLauncher(launcher);
         launchCommand.setInspector(inspector);
     }

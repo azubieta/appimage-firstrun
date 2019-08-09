@@ -12,7 +12,7 @@ namespace appimagelauncher {
         public:
             void exec(QList<QString> arguments) override;
 
-            void setUi(std::shared_ptr<LaunchCommandAbstractAssistant> ui);
+            void setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> assistant);
 
             void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher);
 
@@ -20,7 +20,7 @@ namespace appimagelauncher {
 
         private:
             QString binaryPath;
-            std::shared_ptr<LaunchCommandAbstractAssistant> ui = nullptr;
+            std::shared_ptr<LaunchCommandAbstractAssistant> assistant = nullptr;
             std::shared_ptr<AbstractLauncher> launcher;
             std::shared_ptr<AbstractInspector> inspector;
 

@@ -7,3 +7,11 @@ std::shared_ptr<appimagelauncher::commands::Command> TestFactory::getCommandByNa
     }
     return std::shared_ptr<appimagelauncher::commands::Command>();
 }
+
+void TestFactory::setLauncher(std::shared_ptr<AbstractLauncher> launcher) {
+
+}
+
+void TestFactory::setInspector(std::shared_ptr<AbstractInspector> inspector) {
+
+}

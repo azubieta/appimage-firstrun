@@ -31,30 +31,6 @@ public:
 
 
 private slots:
-
-    void initTestCase() {
-    }
-
-    void KeepQtSpecialArgs() {
-        appimagelauncher::AppImageLauncher launcher(originalArgs.size(), originalArgs.data());
-        auto testFactory = std::make_shared<TestFactory>();
-        launcher.setCommandsFactory(testFactory);
-
-        QString command = QCoreApplication::arguments().first();
-
-        launcher.parseArguments(qCoreApplication);
-        QVERIFY(true); // check that a condition is satisfied
-        QCOMPARE(1, 1); // compare two values
-    }
-
-    void mySecondTest() {
-//        QVERIFY(myCondition());
-//        QVERIFY(1 != 2);
-    }
-
-    void cleanupTestCase() {
-        qDebug("Called after myFirstTest and mySecondTest.");
-    }
 };
 
 int main(int argc, char* argv[]) {

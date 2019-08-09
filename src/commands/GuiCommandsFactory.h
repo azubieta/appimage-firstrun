@@ -25,9 +25,12 @@ namespace appimagelauncher {
 
             void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) override;
 
+            void setInspector(std::shared_ptr<AbstractInspector> newInspector) override;
+
         private:
             QApplication* application;
             std::shared_ptr<AbstractLauncher> launcher;
+            std::shared_ptr<AbstractInspector> inspector;
         };
     }
 }
