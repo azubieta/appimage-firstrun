@@ -1,7 +1,11 @@
 #pragma once
 // system
 #include <memory>
-#include <AbstractLauncher.h>
+
+// local
+#include "AbstractLauncher.h"
+#include "AbstractInstaller.h"
+
 
 class LaunchCommandAbstractAssistant {
 public:
@@ -10,5 +14,7 @@ public:
     virtual void setTarget(const QString& appImagePath, const QStringList& args) = 0;
 
     virtual void setLauncher(std::shared_ptr<AbstractLauncher> launcher) = 0;
+
+    virtual void setInstaller(std::shared_ptr<AbstractInstaller> installer) = 0;
 };
 

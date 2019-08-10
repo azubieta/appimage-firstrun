@@ -4,6 +4,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_library(AppImageLauncherBase STATIC utils.cpp AppImageLauncher.cpp)
+add_library(AppImageLauncherBase STATIC utils.cpp AppImageLauncher.cpp AbstractInstaller.h)
 target_link_libraries(AppImageLauncherBase PUBLIC Qt5::Core)
 target_include_directories(AppImageLauncherBase PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

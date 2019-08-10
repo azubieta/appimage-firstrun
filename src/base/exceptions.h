@@ -7,6 +7,16 @@
 #include <QtCore/QString>
 
 namespace appimagelauncher {
+    class AppImageLauncherError : public std::runtime_error {
+    public:
+        explicit AppImageLauncherError(const QString& arg) : runtime_error(arg.toStdString()) {}
+    };
+
+    class InstallErrorTargetAlreadyExists : public AppImageLauncherError {
+    public:
+        explicit InstallErrorTargetAlreadyExists(const QString& arg) : AppImageLauncherError(arg) {}
+    };
+    
     namespace commands {
         class CliError : public std::runtime_error {
         public:
