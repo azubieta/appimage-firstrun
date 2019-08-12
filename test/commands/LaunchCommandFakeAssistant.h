@@ -25,6 +25,10 @@ public:
         showRequested = false;
     }
 
+    void setInstaller(std::shared_ptr<AbstractInstaller> installer) override {
+
+    }
+
 private:
     bool showRequested = false;
 };

@@ -68,7 +68,8 @@ private slots:
 
     void testIntegrateExistentAndNotOverride() {
         auto launcher = std::make_shared<FakeLauncher>();
-        auto installer = std::make_shared<FakeInstaller>("HOME/file.AppImage", true);
+        auto installer = std::make_shared<FakeInstaller>();
+        installer->setTargetAlreadyExists(true);
 
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
@@ -87,7 +88,8 @@ private slots:
 
     void testIntegrateExistentAndOverride() {
         auto launcher = std::make_shared<FakeLauncher>();
-        auto installer = std::make_shared<FakeInstaller>("HOME/file.AppImage", true);
+        auto installer = std::make_shared<FakeInstaller>();
+        installer->setTargetAlreadyExists(true);
 
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
@@ -106,7 +108,8 @@ private slots:
 
     void testIntegrateTargetReadOnly() {
         auto launcher = std::make_shared<FakeLauncher>();
-        auto installer = std::make_shared<FakeInstaller>("HOME/file.AppImage", false, true);
+        auto installer = std::make_shared<FakeInstaller>();
+        installer->setNoPermissionsOnTarget(true);
 
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);

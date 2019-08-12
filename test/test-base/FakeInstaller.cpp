@@ -5,9 +5,7 @@
 #include "exceptions.h"
 #include "FakeInstaller.h"
 
-FakeInstaller::FakeInstaller(QString targetPath, bool targetAlreadyExists, bool noPermissionsOnTarget)
-        : targetAlreadyExists(targetAlreadyExists), targetPath(targetPath),
-          noPermissionsOnTarget(noPermissionsOnTarget) {}
+FakeInstaller::FakeInstaller() {}
 
 void FakeInstaller::install(const QString& appImagePath) {
     installCalled = true;
@@ -42,4 +40,16 @@ bool FakeInstaller::wasUninstallCalled() const {
 
 bool FakeInstaller::wasForcedInstallCalled() const {
     return forcedInstallCalled;
+}
+
+void FakeInstaller::setTargetAlreadyExists(bool targetAlreadyExists) {
+    FakeInstaller::targetAlreadyExists = targetAlreadyExists;
+}
+
+void FakeInstaller::setNoPermissionsOnTarget(bool noPermissionsOnTarget) {
+    FakeInstaller::noPermissionsOnTarget = noPermissionsOnTarget;
+}
+
+void FakeInstaller::setTargetPath(const QString& targetPath) {
+    FakeInstaller::targetPath = targetPath;
 }

@@ -13,7 +13,7 @@
 
 class FakeInstaller : public AbstractInstaller {
 public:
-    explicit FakeInstaller(QString targetPath = "", bool targetAlreadyExists = false, bool noPermissionsOnTarget = false);
+    explicit FakeInstaller();
 
     void install(const QString& appImagePath) override;
 
@@ -23,11 +23,17 @@ public:
 
     QString getTargetPathFor(const QString& appImagePath) override;
 
+    void setTargetPath(const QString& targetPath);
+
     bool wasInstallCalled() const;
 
     bool wasUninstallCalled() const;
 
     bool wasForcedInstallCalled() const;
+
+    void setTargetAlreadyExists(bool targetAlreadyExists);
+
+    void setNoPermissionsOnTarget(bool noPermissionsOnTarget);
 
 private:
     QString targetPath;
