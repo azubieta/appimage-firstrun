@@ -1,4 +1,5 @@
 // system
+#include <utility>
 #include <vector>
 #include <unistd.h>
 
@@ -32,13 +33,13 @@ namespace appimagelauncher {
             if (binaryPath.startsWith("/tmp/.mount_"))
                 return true;
 
-            // TODO: Desktop entry X-AppImage-Integrate=false
+            // Desktop entry X-AppImage-Integrate=false
             QVariantMap appInfo = inspector->getApplicationInfo(binaryPath);
             QVariantList appSettings = appInfo.value("flags").toList();
             if (appSettings.contains("NO_INTEGRATE"))
                 return true;
 
-            // TODO: Desktop entry Terminal=true
+            // Desktop entry Terminal=true
             if (appSettings.contains("TERMINAL_APP"))
                 return true;
 
@@ -47,16 +48,16 @@ namespace appimagelauncher {
             return false;
         }
 
-        void LaunchCommand::setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> assistant) {
-            LaunchCommand::assistant = assistant;
+        void LaunchCommand::setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> newAssistant) {
+            LaunchCommand::assistant = std::move(newAssistant);
         }
 
         void LaunchCommand::setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) {
-            launcher = newLauncher;
+            launcher = std::move(newLauncher);
         }
 
         void LaunchCommand::setInspector(std::shared_ptr<AbstractInspector> newInspector) {
-            inspector = newInspector;
+            inspector = std::move(newInspector);
         }
     }
 }

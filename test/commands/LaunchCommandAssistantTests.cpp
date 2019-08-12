@@ -15,11 +15,13 @@ public:
     LaunchCommandAssistantDialogTestsWrapper()
             : LaunchCommandAssistantDialog(),
               publicUi(ui),
-              publicOverrideConfirmationMessage(overrideConfirmationMessage) {
+              publicOverrideConfirmationMessage(overrideConfirmationMessage),
+              publicErrorMessage(errorMessage) {
     }
 
     std::shared_ptr<Ui::LaunchCommandAssistantDialog>& publicUi;
     std::shared_ptr<QMessageBox>& publicOverrideConfirmationMessage;
+    std::shared_ptr<QMessageBox>& publicErrorMessage;
 };
 
 class LaunchCommandAssistantTests : public QObject {
@@ -42,7 +44,9 @@ private slots:
         auto launcher = std::make_shared<FakeLauncher>();
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
+        dialog.show();
         QTest::mouseClick(dialog.publicUi->runButton, Qt::LeftButton);
+        QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
     }
 
@@ -53,8 +57,11 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
+
+        QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
         QVERIFY(installer->wasInstallCalled());
     }
@@ -66,10 +73,13 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.publicOverrideConfirmationMessage);
         dialog.publicOverrideConfirmationMessage->reject();
 
+        QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
         QVERIFY(installer->wasInstallCalled());
         QVERIFY(!installer->wasForcedInstallCalled());
@@ -82,16 +92,37 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.publicOverrideConfirmationMessage);
         dialog.publicOverrideConfirmationMessage->accept();
 
-
+        QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
         QVERIFY(installer->wasInstallCalled());
         QVERIFY(installer->wasForcedInstallCalled());
     }
 
+    void testIntegrateTargetReadOnly() {
+        auto launcher = std::make_shared<FakeLauncher>();
+        auto installer = std::make_shared<FakeInstaller>("HOME/file.AppImage", false, true);
+
+        LaunchCommandAssistantDialogTestsWrapper dialog;
+        dialog.setLauncher(launcher);
+        dialog.setInstaller(installer);
+        dialog.show();
+
+        QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.publicErrorMessage);
+        dialog.publicErrorMessage->accept();
+
+        QVERIFY(dialog.isVisible());
+
+        QVERIFY(installer->wasInstallCalled());
+        QVERIFY(!launcher->wasLaunchCalled());
+        QVERIFY(!installer->wasForcedInstallCalled());
+    }
 };
 
 

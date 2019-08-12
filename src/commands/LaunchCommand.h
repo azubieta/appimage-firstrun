@@ -12,7 +12,7 @@ namespace appimagelauncher {
         public:
             void exec(QList<QString> arguments) override;
 
-            void setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> assistant);
+            void setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> newAssistant);
 
             void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher);
 

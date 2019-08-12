@@ -24,6 +24,7 @@ void LaunchCommandAssistantDialog::setLauncher(std::shared_ptr<AbstractLauncher>
 
 void LaunchCommandAssistantDialog::on_runButton_released() {
     launcher->launch(appImagePath, args);
+    hide();
 }
 
 void LaunchCommandAssistantDialog::setInstaller(std::shared_ptr<AbstractInstaller> installer) {
@@ -46,8 +47,11 @@ void LaunchCommandAssistantDialog::on_integrateButton_released() {
     try {
         installer->install(appImagePath);
         launcher->launch(appImagePath, args);
+        hide();
     } catch (const appimagelauncher::InstallErrorTargetAlreadyExists& error) {
         confirmOverride();
+    } catch (const appimagelauncher::InstallErrorNoPermissionsOnTarget& error) {
+        showErrorMessage(tr("Unable to deploy the AppImage file"), error.what());
     }
 }
 
@@ -74,5 +78,11 @@ void LaunchCommandAssistantDialog::on_confirmOverrideFinished(int result) {
         installer->forcedInstall(appImagePath);
 
     launcher->launch(appImagePath, args);
+    hide();
+}
+
+void LaunchCommandAssistantDialog::showErrorMessage(const QString& title, const QString& message) {
+    errorMessage.reset(new QMessageBox(QMessageBox::Warning, title, message, QMessageBox::Ok));
+    errorMessage->show();
 }
 

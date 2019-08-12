@@ -16,6 +16,11 @@ namespace appimagelauncher {
     public:
         explicit InstallErrorTargetAlreadyExists(const QString& arg) : AppImageLauncherError(arg) {}
     };
+
+    class InstallErrorNoPermissionsOnTarget : public AppImageLauncherError {
+    public:
+        explicit InstallErrorNoPermissionsOnTarget(const QString& arg) : AppImageLauncherError(arg) {}
+    };
     
     namespace commands {
         class CliError : public std::runtime_error {

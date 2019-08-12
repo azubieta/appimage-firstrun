@@ -45,8 +45,11 @@ protected:
 
     std::shared_ptr<Ui::LaunchCommandAssistantDialog> ui;
     std::shared_ptr<QMessageBox> overrideConfirmationMessage;
+    std::shared_ptr<QMessageBox> errorMessage;
     std::shared_ptr<AbstractLauncher> launcher;
     std::shared_ptr<AbstractInstaller> installer;
 
     void confirmOverride();
+
+    void showErrorMessage(const QString& title, const QString& message);
 };

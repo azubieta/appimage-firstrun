@@ -1,14 +1,23 @@
+// libraries
+#include <QtCore/QObject>
+
 // local
 #include "exceptions.h"
 #include "FakeInstaller.h"
 
-FakeInstaller::FakeInstaller(QString targetPath, bool targetAlreadyExists)
-        : targetAlreadyExists(targetAlreadyExists), targetPath(targetPath) {}
+FakeInstaller::FakeInstaller(QString targetPath, bool targetAlreadyExists, bool noPermissionsOnTarget)
+        : targetAlreadyExists(targetAlreadyExists), targetPath(targetPath),
+          noPermissionsOnTarget(noPermissionsOnTarget) {}
 
 void FakeInstaller::install(const QString& appImagePath) {
     installCalled = true;
+
     if (targetAlreadyExists)
         throw appimagelauncher::InstallErrorTargetAlreadyExists(appImagePath);
+
+    if (noPermissionsOnTarget)
+        throw appimagelauncher::InstallErrorNoPermissionsOnTarget(
+                QObject::tr("Not enough permissions to write %1").arg(appImagePath));
 }
 
 bool FakeInstaller::wasInstallCalled() const {
