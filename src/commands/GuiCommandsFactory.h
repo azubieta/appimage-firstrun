@@ -10,6 +10,8 @@
 // local headers
 #include "Command.h"
 #include "AbstractFactory.h"
+#include "AbstractInspector.h"
+#include "AbstractInstaller.h"
 
 /**
  * Creates Commands.
@@ -31,6 +33,7 @@ namespace appimagelauncher {
             QApplication* application;
             std::shared_ptr<AbstractLauncher> launcher;
             std::shared_ptr<AbstractInspector> inspector;
+            std::shared_ptr<AbstractInstaller> installer;
         };
     }
 }

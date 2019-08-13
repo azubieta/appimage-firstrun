@@ -2,6 +2,7 @@
 #include "exceptions.h"
 #include "LaunchCommand.h"
 #include "GuiCommandsFactory.h"
+#include "LaunchCommandAssistantDialog.h"
 
 
 namespace appimagelauncher {
@@ -14,6 +15,13 @@ namespace appimagelauncher {
             if (commandName == "launch") {
                 auto launchCommand = std::make_shared<LaunchCommand>();
                 launchCommand->setLauncher(launcher);
+                launchCommand->setInspector(inspector);
+
+                auto assistantDialog = std::make_shared<LaunchCommandAssistantDialog>();
+                assistantDialog->setLauncher(launcher);
+                assistantDialog->setInstaller(installer);
+
+                launchCommand->setAssistant(assistantDialog);
                 return launchCommand;
             }
 

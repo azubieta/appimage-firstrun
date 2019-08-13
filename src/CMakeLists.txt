@@ -9,3 +9,8 @@ target_link_libraries(
     PRIVATE AppImageLauncherCommands
     PRIVATE AppImageServicesInterfaces
 )
+
+install(
+    TARGETS AppImageLauncher
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

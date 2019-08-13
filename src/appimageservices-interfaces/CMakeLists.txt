@@ -11,7 +11,15 @@ qt5_add_dbus_interface(AppImageServicesInterfacesSources org.appimage.Services.U
 qt5_add_dbus_interface(AppImageServicesInterfacesSources org.appimage.Services.Updater.Task.xml UpdaterTaskInterface)
 qt5_add_dbus_interface(AppImageServicesInterfacesSources org.appimage.Services.Inspector.xml InspectorInterface)
 
-add_library(AppImageServicesInterfaces STATIC ${AppImageServicesInterfacesSources} AppImageServicesLauncher.cpp)
+set(
+    AppImageServicesInterfacesSources
 
-target_link_libraries(AppImageServicesInterfaces PUBLIC AppImageLauncherBase Qt5::Core)
-target_include_directories(AppImageServicesInterfaces PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+    AppImageServicesLauncher.cpp
+    AppImageServicesInspector.cpp
+    ${AppImageServicesInterfacesSources}
+)
+
+add_library(AppImageServicesInterfaces STATIC ${AppImageServicesInterfacesSources})
+
+target_link_libraries(AppImageServicesInterfaces PUBLIC AppImageLauncherBase Qt5::Core Qt5::DBus)
+target_include_directories(AppImageServicesInterfaces PUBLIC ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
