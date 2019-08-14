@@ -15,16 +15,20 @@
 class LaunchCommandAssistantDialogTestsWrapper : public LaunchCommandAssistantDialog {
 Q_OBJECT
 public:
-    LaunchCommandAssistantDialogTestsWrapper()
-            : LaunchCommandAssistantDialog(),
-              publicUi(ui),
-              publicOverrideConfirmationMessage(overrideConfirmationMessage),
-              publicErrorMessage(errorMessage) {
-    }
+    LaunchCommandAssistantDialogTestsWrapper() : LaunchCommandAssistantDialog() {}
 
-    std::shared_ptr<Ui::LaunchCommandAssistantDialog>& publicUi;
-    std::shared_ptr<QMessageBox>& publicOverrideConfirmationMessage;
-    std::shared_ptr<QMessageBox>& publicErrorMessage;
+    Ui::LaunchCommandAssistantDialog* getUi() {
+        return ui;
+    };
+
+
+    QMessageBox* getOverrideConfirmationMessage() {
+        return overrideConfirmationMessage;
+    };
+
+    QMessageBox* getErrorMessage() {
+        return errorMessage;
+    };
 };
 
 class LaunchCommandAssistantTests : public QObject {
@@ -39,9 +43,9 @@ private slots:
         // the dialog must be shown for the visibility tests to work
         dialog.show();
 
-        QVERIFY(!dialog.publicUi->widgetDetails->isVisible());
-        QTest::mouseClick(dialog.publicUi->detailsButton, Qt::LeftButton);
-        QVERIFY(dialog.publicUi->widgetDetails->isVisible());
+        QVERIFY(!dialog.getUi()->widgetDetails->isVisible());
+        QTest::mouseClick(dialog.getUi()->detailsButton, Qt::LeftButton);
+        QVERIFY(dialog.getUi()->widgetDetails->isVisible());
     }
 
     void testRun() {
@@ -50,7 +54,7 @@ private slots:
         dialog.setLauncher(launcher);
         dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
-        QTest::mouseClick(dialog.publicUi->runButton, Qt::LeftButton);
+        QTest::mouseClick(dialog.getUi()->runButton, Qt::LeftButton);
         QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
     }
@@ -65,7 +69,7 @@ private slots:
         dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
-        QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
+        QTest::mouseClick(dialog.getUi()->integrateButton, Qt::LeftButton);
 
         QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
@@ -83,9 +87,9 @@ private slots:
         dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
-        QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
-        QVERIFY(dialog.publicOverrideConfirmationMessage);
-        dialog.publicOverrideConfirmationMessage->reject();
+        QTest::mouseClick(dialog.getUi()->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.getOverrideConfirmationMessage());
+        dialog.getOverrideConfirmationMessage()->reject();
 
         QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
@@ -104,9 +108,9 @@ private slots:
         dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
-        QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
-        QVERIFY(dialog.publicOverrideConfirmationMessage);
-        dialog.publicOverrideConfirmationMessage->accept();
+        QTest::mouseClick(dialog.getUi()->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.getOverrideConfirmationMessage());
+        dialog.getOverrideConfirmationMessage()->accept();
 
         QVERIFY(!dialog.isVisible());
         QVERIFY(launcher->wasLaunchCalled());
@@ -125,9 +129,9 @@ private slots:
         dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
-        QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
-        QVERIFY(dialog.publicErrorMessage);
-        dialog.publicErrorMessage->accept();
+        QTest::mouseClick(dialog.getUi()->integrateButton, Qt::LeftButton);
+        QVERIFY(dialog.getErrorMessage());
+        dialog.getErrorMessage()->accept();
         dialog.show();
 
         QVERIFY(dialog.isVisible());
@@ -149,7 +153,7 @@ private slots:
         dialog.show();
 
 
-        QVERIFY(dialog.publicUi->labelIcon->pixmap() != nullptr);
+        QVERIFY(dialog.getUi()->labelIcon->pixmap() != nullptr);
     }
 
     void testLoadEmptyAppInfo() {
@@ -164,9 +168,9 @@ private slots:
         dialog.setInspector(inspector);
         dialog.show();
 
-        QVERIFY(dialog.publicErrorMessage);
-        QVERIFY(dialog.publicErrorMessage->isVisible());
-        dialog.publicErrorMessage->accept();
+        QVERIFY(dialog.getErrorMessage());
+        QVERIFY(dialog.getErrorMessage()->isVisible());
+        dialog.getErrorMessage()->accept();
 
         QVERIFY(!dialog.isVisible());
     }
@@ -206,11 +210,11 @@ private slots:
         dialog.show();
 
 
-        QCOMPARE(dialog.publicUi->labelName->text(), "Subsurface");
-        QCOMPARE(dialog.publicUi->labelCategories->text(), "Utility");
-        QCOMPARE(dialog.publicUi->labelAbstract->text(), "Manage and display dive computer data");
-        QCOMPARE(dialog.publicUi->labelLicense->text(), "GPL-2.0-only");
-        QCOMPARE(dialog.publicUi->labelLinks->text(),
+        QCOMPARE(dialog.getUi()->labelName->text(), "Subsurface");
+        QCOMPARE(dialog.getUi()->labelCategories->text(), "Utility");
+        QCOMPARE(dialog.getUi()->labelAbstract->text(), "Manage and display dive computer data");
+        QCOMPARE(dialog.getUi()->labelLicense->text(), "GPL-2.0-only");
+        QCOMPARE(dialog.getUi()->labelLinks->text(),
                  "<a href=\"https://subsurface-divelog.org\">Homepage</a> "
                  "<a href=\"https://www.transifex.com/subsurface/subsurface/\">Translate</a>");
     }

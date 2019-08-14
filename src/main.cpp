@@ -15,8 +15,15 @@
 using namespace appimagelauncher;
 
 int main(int argc, char** argv) {
-    AppImageLauncher appImageLauncher(argc, argv);
+    // Copy arguments before they are modified by the QApplication
+    int originalArgc = argc;
+    char* originalArgv[argc];
+    for (int i = 0; i < argc; ++i)
+        originalArgv[i] = strdup(argv[i]);
+
     QApplication app(argc, argv);
+    AppImageLauncher appImageLauncher(&app);
+
     auto commandsFactory = std::make_shared<commands::GuiCommandsFactory>();
     commandsFactory->setLauncher(std::make_shared<AppImageServicesLauncher>());
     commandsFactory->setInspector(std::make_shared<AppImageServicesInspector>());
@@ -25,7 +32,7 @@ int main(int argc, char** argv) {
     appImageLauncher.setCommandsFactory(commandsFactory);
 
     try {
-        appImageLauncher.parseArguments(app);
+        appImageLauncher.parseArguments(originalArgc, originalArgv, app);
     } catch (const InvalidArguments& error) {
         qCritical("%s", error.what());
         appImageLauncher.showHelp(2);

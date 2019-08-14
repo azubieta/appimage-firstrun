@@ -19,5 +19,8 @@ add_test(NAME AppImageLauncherTests_KeepQtArgs
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/AppImageLauncherTests_KeepQtArgs.sh ${PROJECT_BINARY_DIR}/src/AppImageLauncher)
 
 
+add_test(NAME AppImageLauncherTests_Disable.sh
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/AppImageLauncherTests_KeepQtArgs.sh ${PROJECT_BINARY_DIR}/src/AppImageLauncher)
+
 # Allways must be at the end
 enable_testing()

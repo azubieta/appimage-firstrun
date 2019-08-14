@@ -10,12 +10,7 @@
 
 namespace appimagelauncher {
 
-    AppImageLauncher::AppImageLauncher(int argc, char** argv, QObject* parent) : QObject(parent) {
-        /* copy original arguments could used later to launch a target app
-         * arg 0 refers to the executable path therefore could be ignored */
-        for (int i = 1; i < argc; ++i)
-            originalArgs.push_back(argv[i]);
-
+    AppImageLauncher::AppImageLauncher(QObject* parent) : QObject(parent) {
         initParser();
     }
 
@@ -31,7 +26,7 @@ namespace appimagelauncher {
     int AppImageLauncher::exec() {
         try {
             commandObj = commandsFactory->getCommandByName(commandName);
-            commandObj->exec(positionalArguments);
+            commandObj->exec(commandArguments);
         } catch (const commands::CommandNotFoundError& e) {
             qCritical("%s", e.what());
             showHelp(2);
@@ -44,7 +39,7 @@ namespace appimagelauncher {
         }
     }
 
-    void AppImageLauncher::parseArguments(const QCoreApplication& qCoreApplication) {
+    void AppImageLauncher::parseArguments(int argc, char** argv, const QCoreApplication& qCoreApplication) {
         parser.process(qCoreApplication);
         QStringList positionalArgumentsInput = parser.positionalArguments();
 
@@ -59,15 +54,17 @@ namespace appimagelauncher {
 
             /* the original arguments are required to run the target app, Qt removes the ones relevant to it which
              * leads to issues while launching other Qt applications */
-            positionalArguments = originalArgs;
+            for (int i = 1; i < argc; ++i)
+                commandArguments << argv[i];
+
         } else {
             commandName = first;
 
-            // remove command from the positional arguments list
-            positionalArgumentsInput.pop_front();
-            positionalArguments = positionalArgumentsInput;
+            /* the original arguments are required to run the target app, Qt removes the ones relevant to it which
+             * leads to issues while launching other Qt applications */
+            for (int i = 1; i < argc; ++i)
+                commandArguments << argv[i];
         }
-
     }
 
     void AppImageLauncher::showHelp(int exitCode) {

@@ -29,6 +29,10 @@ public:
 
     }
 
+    void setInspector(std::shared_ptr<AbstractInspector> inspector) override {
+
+    }
+
 private:
     bool showRequested = false;
 };

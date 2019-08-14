@@ -20,9 +20,9 @@ namespace appimagelauncher {
     Q_OBJECT
 
     public:
-        AppImageLauncher(int argc, char** argv, QObject* parent = nullptr);
+        AppImageLauncher(QObject* parent = nullptr);
 
-        void parseArguments(const QCoreApplication& qCoreApplication);
+        void parseArguments(int argc, char** argv, const QCoreApplication& qCoreApplication);
 
         void showHelp(int exitCode);
 
@@ -36,8 +36,7 @@ namespace appimagelauncher {
 
     private:
         QString commandName;
-        QStringList originalArgs;
-        QStringList positionalArguments;
+        QStringList commandArguments;
 
         QCommandLineParser parser;
 

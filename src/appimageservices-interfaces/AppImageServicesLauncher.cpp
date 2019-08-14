@@ -3,6 +3,7 @@
 #include <vector>
 
 // libraries
+#include <QtGlobal>
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusPendingReply>
 
@@ -22,7 +23,10 @@ void AppImageServicesLauncher::launch(const QString& command, const QStringList&
 
     // copy arguments
     for (const QString& arg: args)
-        argsVector.push_back(arg.toLocal8Bit().data());
+        argsVector.push_back(strdup(arg.toLocal8Bit().data()));
+
+    // prevent loop executions
+    qputenv("APPIMAGELAUNCHER_DISABLE", "true");
 
     // args need to be null terminated
     argsVector.push_back(nullptr);

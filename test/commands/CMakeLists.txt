@@ -15,3 +15,5 @@ add_test(NAME LaunchCommandTests COMMAND LaunchCommandTests)
 add_executable(LaunchCommandAssistantTests LaunchCommandAssistantTests.cpp ${PROJECT_SOURCE_DIR}/res/icons.qrc)
 target_link_libraries(LaunchCommandAssistantTests AppImageLauncherCommands AppImageLauncherTestBase Qt5::Test)
 add_test(NAME LaunchCommandAssistantTests COMMAND LaunchCommandAssistantTests)
+
+enable_testing()
