@@ -1,10 +1,13 @@
 // libraries
-#include <QObject>
 #include <QTest>
+#include <QObject>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 // local
 #include "FakeLauncher.h"
 #include "FakeInstaller.h"
+#include "FakeInspector.h"
 #include "LaunchCommandAssistantDialog.h"
 #include "LaunchCommandAbstractAssistant.h"
 #include "AppImageLauncherCommands_autogen/include/ui_LaunchCommandAssistantDialog.h"
@@ -32,6 +35,7 @@ private slots:
         auto launcher = std::make_shared<FakeLauncher>();
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         // the dialog must be shown for the visibility tests to work
         dialog.show();
 
@@ -44,6 +48,7 @@ private slots:
         auto launcher = std::make_shared<FakeLauncher>();
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
         QTest::mouseClick(dialog.publicUi->runButton, Qt::LeftButton);
         QVERIFY(!dialog.isVisible());
@@ -57,6 +62,7 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
@@ -74,6 +80,7 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
@@ -94,6 +101,7 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
@@ -114,17 +122,97 @@ private slots:
         LaunchCommandAssistantDialogTestsWrapper dialog;
         dialog.setLauncher(launcher);
         dialog.setInstaller(installer);
+        dialog.setInspector(std::make_shared<FakeInspector>());
         dialog.show();
 
         QTest::mouseClick(dialog.publicUi->integrateButton, Qt::LeftButton);
         QVERIFY(dialog.publicErrorMessage);
         dialog.publicErrorMessage->accept();
+        dialog.show();
 
         QVERIFY(dialog.isVisible());
 
         QVERIFY(installer->wasInstallCalled());
         QVERIFY(!launcher->wasLaunchCalled());
         QVERIFY(!installer->wasForcedInstallCalled());
+    }
+
+    void testLoadIcon() {
+        auto launcher = std::make_shared<FakeLauncher>();
+        auto installer = std::make_shared<FakeInstaller>();
+        auto inspector = std::make_shared<FakeInspector>();
+
+        LaunchCommandAssistantDialogTestsWrapper dialog;
+        dialog.setLauncher(launcher);
+        dialog.setInstaller(installer);
+        dialog.setInspector(inspector);
+        dialog.show();
+
+
+        QVERIFY(dialog.publicUi->labelIcon->pixmap() != nullptr);
+    }
+
+    void testLoadEmptyAppInfo() {
+        auto launcher = std::make_shared<FakeLauncher>();
+        auto installer = std::make_shared<FakeInstaller>();
+        auto inspector = std::make_shared<FakeInspector>();
+        inspector->setApplicationInfo(QVariantMap());
+
+        LaunchCommandAssistantDialogTestsWrapper dialog;
+        dialog.setLauncher(launcher);
+        dialog.setInstaller(installer);
+        dialog.setInspector(inspector);
+        dialog.show();
+
+        QVERIFY(dialog.publicErrorMessage);
+        QVERIFY(dialog.publicErrorMessage->isVisible());
+        dialog.publicErrorMessage->accept();
+
+        QVERIFY(!dialog.isVisible());
+    }
+
+    void testLoadAppInfo() {
+        auto launcher = std::make_shared<FakeLauncher>();
+        auto installer = std::make_shared<FakeInstaller>();
+        auto inspector = std::make_shared<FakeInspector>();
+        QByteArray defaultAppInfo = "{\n"
+                                    "    \"categories\": [\n"
+                                    "        \"Utility\"\n"
+                                    "    ],\n"
+                                    "    \"flags\": [\n"
+                                    "    ],\n"
+                                    "    \"id\": \"subsurface\",\n"
+                                    "    \"license\": \"GPL-2.0-only\",\n"
+                                    "    \"links\": {\n"
+                                    "        \"homepage\": \"https://subsurface-divelog.org\",\n"
+                                    "        \"translate\": \"https://www.transifex.com/subsurface/subsurface/\"\n"
+                                    "    },\n"
+                                    "    \"locales\": [\n"
+                                    "    ],\n"
+                                    "    \"mimeTypes\": [\n"
+                                    "    ],\n"
+                                    "    \"name\": \"Subsurface\",\n"
+                                    "    \"summary\": \"Manage and display dive computer data\",\n"
+                                    "    \"version\": \"v4.8.3-243-g9009ea767848\"\n"
+                                    "}";
+
+        auto doc = QJsonDocument::fromJson(defaultAppInfo);
+        inspector->setApplicationInfo(doc.object().toVariantMap());
+
+        LaunchCommandAssistantDialogTestsWrapper dialog;
+        dialog.setLauncher(launcher);
+        dialog.setInstaller(installer);
+        dialog.setInspector(inspector);
+        dialog.show();
+
+
+        QCOMPARE(dialog.publicUi->labelName->text(), "Subsurface");
+        QCOMPARE(dialog.publicUi->labelCategories->text(), "Utility");
+        QCOMPARE(dialog.publicUi->labelAbstract->text(), "Manage and display dive computer data");
+        QCOMPARE(dialog.publicUi->labelLicense->text(), "GPL-2.0-only");
+        QCOMPARE(dialog.publicUi->labelLinks->text(),
+                 "<a href=\"https://subsurface-divelog.org\">Homepage</a> "
+                 "<a href=\"https://www.transifex.com/subsurface/subsurface/\">Translate</a>");
     }
 };
 

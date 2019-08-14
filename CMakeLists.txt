@@ -12,6 +12,7 @@ include(GNUInstallDirs)
 set(QT_MIN_VERSION "5.8.0")
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Widgets DBus)
 
+add_subdirectory(res)
 add_subdirectory(src)
 add_subdirectory(test)
 

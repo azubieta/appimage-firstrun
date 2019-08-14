@@ -24,7 +24,7 @@ namespace appimagelauncher {
             std::shared_ptr<AbstractLauncher> launcher;
             std::shared_ptr<AbstractInspector> inspector;
 
-            bool isAssistantDisabled();
+            bool isAssistantDisabled(const QVariantMap& appInfo);
         };
     }
 }

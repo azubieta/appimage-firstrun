@@ -1,5 +1,6 @@
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 # As moc files are generated in the binary dir, tell CMake
 # to always look for includes there:
@@ -11,6 +12,6 @@ target_link_libraries(LaunchCommandTests AppImageLauncherCommands AppImageLaunch
 add_test(NAME LaunchCommandTests COMMAND LaunchCommandTests)
 
 ## Launch Command Assistant
-add_executable(LaunchCommandAssistantTests LaunchCommandAssistantTests.cpp)
+add_executable(LaunchCommandAssistantTests LaunchCommandAssistantTests.cpp ${PROJECT_SOURCE_DIR}/res/icons.qrc)
 target_link_libraries(LaunchCommandAssistantTests AppImageLauncherCommands AppImageLauncherTestBase Qt5::Test)
 add_test(NAME LaunchCommandAssistantTests COMMAND LaunchCommandAssistantTests)

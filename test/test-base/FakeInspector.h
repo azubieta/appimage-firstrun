@@ -15,6 +15,8 @@
 
 class FakeInspector : public AbstractInspector {
 public:
+    FakeInspector();
+
     QVariantMap getApplicationInfo(const QString& appImagePath) override;
 
     QIcon getApplicationIcon(const QString& appImagePath) override;

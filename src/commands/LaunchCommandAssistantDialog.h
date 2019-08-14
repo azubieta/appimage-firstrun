@@ -27,6 +27,8 @@ public:
 
     void setInstaller(std::shared_ptr<AbstractInstaller> installer) override;
 
+    void setInspector(std::shared_ptr<AbstractInspector> inspector) override;
+
     void setTarget(const QString& newAppImagePath, const QStringList& newArgs) override;
 
 protected slots:
@@ -39,17 +41,24 @@ protected slots:
 
     void on_confirmOverrideFinished(int result);
 
+    void on_confirmErrorMessageFinished(int result);
+
 protected:
     QString appImagePath;
     QStringList args;
 
-    std::shared_ptr<Ui::LaunchCommandAssistantDialog> ui;
-    std::shared_ptr<QMessageBox> overrideConfirmationMessage;
-    std::shared_ptr<QMessageBox> errorMessage;
+    Ui::LaunchCommandAssistantDialog* ui;
+    QMessageBox* overrideConfirmationMessage;
+    QMessageBox* errorMessage;
     std::shared_ptr<AbstractLauncher> launcher;
     std::shared_ptr<AbstractInstaller> installer;
+    std::shared_ptr<AbstractInspector> inspector;
 
     void confirmOverride();
 
     void showErrorMessage(const QString& title, const QString& message);
+
+    void loadAppIcon();
+
+    bool loadAppInfo();
 };

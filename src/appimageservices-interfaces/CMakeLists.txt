@@ -16,6 +16,7 @@ set(
 
     AppImageServicesLauncher.cpp
     AppImageServicesInspector.cpp
+    AppImageServicesInstaller.cpp
     ${AppImageServicesInterfacesSources}
 )
 

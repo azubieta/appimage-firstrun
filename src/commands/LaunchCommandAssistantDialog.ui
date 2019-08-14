@@ -6,12 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>557</width>
-    <height>350</height>
+    <width>462</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/icons.qrc">
+    <normaloff>:/share/icons/scalable/apps/AppImageLauncher.svg</normaloff>:/share/icons/scalable/apps/AppImageLauncher.svg</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -297,7 +304,7 @@ p, li { white-space: pre-wrap; }
        <item row="2" column="1" colspan="4">
         <widget class="QLabel" name="labelLinks">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://appimage.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#03a9f4;&quot;&gt;Website&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://appimage.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Website&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -384,7 +391,13 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="text">
-          <string>Icon</string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../../res/icons.qrc">:/share/icons/scalable/apps/AppImageLauncher.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -397,6 +410,8 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../res/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

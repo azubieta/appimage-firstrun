@@ -1,5 +1,6 @@
 #pragma once
 // system
+#include <memory>
 
 //libraries
 #include <QString>

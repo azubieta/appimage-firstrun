@@ -21,16 +21,16 @@ namespace appimagelauncher {
     namespace commands {
         class GuiCommandsFactory : public AbstractFactory {
         public:
-            explicit GuiCommandsFactory(QApplication* application);
 
             std::shared_ptr<Command> getCommandByName(const QString&) override;
 
             void setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) override;
 
+            void setInstaller(std::shared_ptr<AbstractInstaller> newInstaller) override;
+
             void setInspector(std::shared_ptr<AbstractInspector> newInspector) override;
 
         private:
-            QApplication* application;
             std::shared_ptr<AbstractLauncher> launcher;
             std::shared_ptr<AbstractInspector> inspector;
             std::shared_ptr<AbstractInstaller> installer;

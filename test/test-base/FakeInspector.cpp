@@ -1,3 +1,7 @@
+// libraries
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+
 // local
 #include "FakeInspector.h"
 
@@ -24,5 +28,9 @@ void FakeInspector::reset() {
     iconRequested = false;
 
     applicationInfo.clear();
-    applicationInfo.clear();
+    applicationIcon = QIcon();
+}
+
+FakeInspector::FakeInspector() {
+    applicationInfo = {{"namne", "App"}};
 }

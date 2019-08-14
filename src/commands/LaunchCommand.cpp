@@ -18,13 +18,17 @@ namespace appimagelauncher {
             binaryPath = utils::removeUriProtocolFromPath(binaryUri);
             arguments.pop_front();
 
-            if (isAssistantDisabled())
+            QVariantMap appInfo = inspector->getApplicationInfo(binaryPath);
+
+            if (isAssistantDisabled(appInfo))
                 launcher->launch(binaryPath, arguments);
-            else
+            else {
+                assistant->setTarget(binaryPath, arguments);
                 assistant->show();
+            }
         }
 
-        bool LaunchCommand::isAssistantDisabled() {
+        bool LaunchCommand::isAssistantDisabled(const QVariantMap& appInfo) {
             // Assistant disabled by default
             if (!qgetenv("APPIMAGELAUNCHER_DISABLE").isEmpty())
                 return true;
@@ -34,7 +38,6 @@ namespace appimagelauncher {
                 return true;
 
             // Desktop entry X-AppImage-Integrate=false
-            QVariantMap appInfo = inspector->getApplicationInfo(binaryPath);
             QVariantList appSettings = appInfo.value("flags").toList();
             if (appSettings.contains("NO_INTEGRATE"))
                 return true;

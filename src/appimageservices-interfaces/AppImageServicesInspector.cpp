@@ -33,21 +33,16 @@ QVariantMap AppImageServicesInspector::getApplicationInfo(const QString& appImag
 }
 
 QIcon AppImageServicesInspector::getApplicationIcon(const QString& appImagePath) {
-    QTemporaryFile temporaryIconFile("XXXXXX");
-    if (temporaryIconFile.open()) {
+    QTemporaryFile temporaryIconFile;
+    if (temporaryIconFile.open() && inspectorInterface->isValid()) {
         auto reply = inspectorInterface->extractApplicationIcon(appImagePath, temporaryIconFile.fileName());
         if (reply.isError()) {
             qWarning() << reply.error();
             return QIcon();
         }
 
-        reply.waitForFinished();
-        if (reply.isError()) {
-            qWarning() << reply.error();
-            return QIcon();
-        }
-
-        return QIcon(temporaryIconFile.fileName());
+        if (reply.value())
+            return QIcon(temporaryIconFile.fileName());
     }
 
     return QIcon();

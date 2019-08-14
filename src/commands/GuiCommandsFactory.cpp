@@ -7,9 +7,6 @@
 
 namespace appimagelauncher {
     namespace commands {
-        GuiCommandsFactory::GuiCommandsFactory(QApplication* application) : application(application) {
-
-        }
 
         std::shared_ptr<Command> GuiCommandsFactory::getCommandByName(const QString& commandName) {
             if (commandName == "launch") {
@@ -19,6 +16,8 @@ namespace appimagelauncher {
 
                 auto assistantDialog = std::make_shared<LaunchCommandAssistantDialog>();
                 assistantDialog->setLauncher(launcher);
+                assistantDialog->setInstaller(installer);
+                assistantDialog->setInspector(inspector);
                 assistantDialog->setInstaller(installer);
 
                 launchCommand->setAssistant(assistantDialog);
@@ -30,12 +29,16 @@ namespace appimagelauncher {
         }
 
         void GuiCommandsFactory::setLauncher(std::shared_ptr<AbstractLauncher> newLauncher) {
-            GuiCommandsFactory::launcher = newLauncher;
+            launcher = newLauncher;
         }
 
         void GuiCommandsFactory::setInspector(std::shared_ptr<AbstractInspector> newInspector) {
-            GuiCommandsFactory::inspector = newInspector;
+            inspector = newInspector;
 
+        }
+
+        void GuiCommandsFactory::setInstaller(std::shared_ptr<AbstractInstaller> newInstaller) {
+            installer = newInstaller;
         }
     }
 }

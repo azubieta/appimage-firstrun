@@ -2,7 +2,10 @@ add_subdirectory(base)
 add_subdirectory(appimageservices-interfaces)
 add_subdirectory(commands)
 
-add_executable(AppImageLauncher main.cpp)
+set(CMAKE_AUTORCC ON)
+
+add_executable(AppImageLauncher main.cpp ${PROJECT_SOURCE_DIR}/res/icons.qrc)
+
 target_link_libraries(
     AppImageLauncher
     PRIVATE AppImageLauncherBase
