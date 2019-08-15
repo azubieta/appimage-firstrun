@@ -42,7 +42,7 @@ private slots:
         launchCommand.exec({"/fake/bin"});
 
         QVERIFY(!assistant->isShowRequested()); // check that the assistant wasn't shown
-        QVERIFY(launcher->wasLaunchCalled()); // check that the assistant wasn't shown
+        QVERIFY(!launcher->wasLaunchCalled()); // check that the assistant wasn't shown
         qputenv("APPIMAGELAUNCHER_DISABLE", "0");
     }
 
@@ -51,7 +51,7 @@ private slots:
         launchCommand.exec(args);
 
         QVERIFY(!assistant->isShowRequested()); // check that the assistant wasn't shown
-        QVERIFY(launcher->wasLaunchCalled()); // check that the assistant wasn't shown
+        QVERIFY(!launcher->wasLaunchCalled()); // check that the assistant wasn't shown
     }
 
     void disableAssistantOnTerminalApp() {
@@ -61,7 +61,7 @@ private slots:
         launchCommand.exec({"/fake/bin"});
 
         QVERIFY(!assistant->isShowRequested()); // check that the assistant wasn't shown
-        QVERIFY(launcher->wasLaunchCalled()); // check that the assistant wasn't shown
+        QVERIFY(!launcher->wasLaunchCalled()); // check that the assistant wasn't shown
     }
 
     void disableAssistantOnIntegrationExplicitlyDisabled() {
@@ -71,7 +71,7 @@ private slots:
         launchCommand.exec({"/fake/bin"});
 
         QVERIFY(!assistant->isShowRequested()); // check that the assistant wasn't shown
-        QVERIFY(launcher->wasLaunchCalled()); // check that the assistant wasn't shown
+        QVERIFY(!launcher->wasLaunchCalled()); // check that the assistant wasn't shown
     }
 
     void disableAssistantOnRegisteredApps() {
@@ -79,7 +79,7 @@ private slots:
         launchCommand.exec({"/fake/bin"});
 
         QVERIFY(!assistant->isShowRequested()); // check that the assistant wasn't shown
-        QVERIFY(launcher->wasLaunchCalled()); // check that the assistant wasn't shown
+        QVERIFY(!launcher->wasLaunchCalled()); // check that the assistant wasn't shown
     }
 
     void cleanup() {

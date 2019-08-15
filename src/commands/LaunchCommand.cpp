@@ -21,7 +21,7 @@ namespace appimagelauncher {
             QVariantMap appInfo = inspector->getApplicationInfo(binaryPath);
 
             if (isAssistantDisabled(appInfo))
-                launcher->launch(binaryPath, arguments);
+                QCoreApplication::exit(1);
             else {
                 assistant->setTarget(binaryPath, arguments);
                 assistant->show();
@@ -46,9 +46,7 @@ namespace appimagelauncher {
             if (appSettings.contains("TERMINAL_APP"))
                 return true;
 
-            // TODO: if the user opted out of the "ask move" thing, we can just run the AppImage
-
-            return false;
+            return launcher->isRegistered(binaryPath);
         }
 
         void LaunchCommand::setAssistant(std::shared_ptr<LaunchCommandAbstractAssistant> newAssistant) {
