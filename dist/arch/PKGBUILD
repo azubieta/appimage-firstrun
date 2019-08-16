@@ -1,11 +1,11 @@
 # Maintainer: Alexis Lopez Zubieta <contact@azubieta.net>
-projectname=appimagelauncher
+projectname=appimage-firstrun
 
 pkgname="$projectname-git"
 pkgver=0.0.1
 pkgrel=1
 epoch=
-pkgdesc="AppImageLauncher using AppImageServices as backend"
+pkgdesc="appimage-firstrun using AppImageServices as backend"
 arch=('x86_64')
 url="https://github.com/azubieta/$projectname"
 license=('MIT')
@@ -19,9 +19,9 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=appimagelauncher-git.install
+install=appimage-firstrun.install
 changelog=
-source=("git+https://www.opencode.net/azubieta/appimagelauncher.git")
+source=("git+https://www.opencode.net/azubieta/appimage-firstrun.git")
 sha256sums=('SKIP')
 noextract=()
 validpgpkeys=()
