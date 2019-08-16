@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
 set -e
 
-APPIMAGE_SERVICES_BIN_PATH=/usr/local/bin/appimage-services
-APPIMAGE_SERVICES_URL="https://www.opencode.net/azubieta/AppImageService/-/jobs/artifacts/master/raw/appimage-services-x86_64.AppImage?job=build:AppImage"
+if [ -z "$(command -v appimage-services)" ]; then
+  APPIMAGE_SERVICES_BIN_PATH=/usr/local/bin/appimage-services
+  APPIMAGE_SERVICES_URL="https://github.com/azubieta/AppImageServices/releases/download/continuous/appimage-services-x86_64.AppImage"
 
-echo "Installing appimage-services to $APPIMAGE_SERVICES_BIN_PATH"
-wget -N "$APPIMAGE_SERVICES_URL" -O "$APPIMAGE_SERVICES_BIN_PATH"
+  echo "Installing appimage-services to $APPIMAGE_SERVICES_BIN_PATH"
+  wget -N "$APPIMAGE_SERVICES_URL" -O "$APPIMAGE_SERVICES_BIN_PATH"
 
-chmod +x "$APPIMAGE_SERVICES_BIN_PATH"
-"$APPIMAGE_SERVICES_BIN_PATH" self-install
+  chmod +x "$APPIMAGE_SERVICES_BIN_PATH"
+  "$APPIMAGE_SERVICES_BIN_PATH" self-install
+fi
