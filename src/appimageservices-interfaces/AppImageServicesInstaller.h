@@ -22,6 +22,8 @@ public:
 
 private:
     AppImageServicesLauncher launcher;
+
+    const QString getAppsDir() const;
 };
 
 
