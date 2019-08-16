@@ -4,16 +4,16 @@ add_subdirectory(commands)
 
 set(CMAKE_AUTORCC ON)
 
-add_executable(AppImageLauncher main.cpp ${PROJECT_SOURCE_DIR}/res/icons.qrc)
+add_executable(${CMAKE_PROJECT_NAME} main.cpp ${PROJECT_SOURCE_DIR}/res/icons.qrc)
 
 target_link_libraries(
-    AppImageLauncher
+    ${CMAKE_PROJECT_NAME}
     PRIVATE AppImageLauncherBase
     PRIVATE AppImageLauncherCommands
     PRIVATE AppImageServicesInterfaces
 )
 
 install(
-    TARGETS AppImageLauncher
+    TARGETS ${CMAKE_PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

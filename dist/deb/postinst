@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-APPIMAGE_SERVICES_BIN_PATH=/usr/bin/appimage-services
+APPIMAGE_SERVICES_BIN_PATH=/usr/local/bin/appimage-services
 APPIMAGE_SERVICES_URL="https://www.opencode.net/azubieta/AppImageService/-/jobs/artifacts/master/raw/appimage-services-x86_64.AppImage?job=build:AppImage"
 
 echo "Installing appimage-services to $APPIMAGE_SERVICES_BIN_PATH"

@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 set -e
 
-
-/usr/bin/appimage-services self-uninstall
-
-rm /usr/bin/appimage-services
+APPIMAGE_SERVICES_BIN_PATH=/usr/local/bin/appimage-services
+$APPIMAGE_SERVICES_BIN_PATH self-uninstall
