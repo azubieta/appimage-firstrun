@@ -1,5 +1,5 @@
 # Maintainer: Alexis Lopez Zubieta <contact@azubieta.net>
-projectname=AppImageLauncher
+projectname=appimagelauncher
 
 pkgname="$projectname-git"
 pkgver=0.0.1
@@ -19,7 +19,7 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=AppImageLauncher-git.install
+install=appimagelauncher-git.install
 changelog=
 source=("git+https://www.opencode.net/azubieta/appimagelauncher.git")
 sha256sums=('SKIP')
