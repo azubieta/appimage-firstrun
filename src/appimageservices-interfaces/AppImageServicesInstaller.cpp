@@ -14,6 +14,12 @@ void AppImageServicesInstaller::install(const QString& appImagePath) {
 }
 
 void AppImageServicesInstaller::tryMoveFile(const QString& appImagePath, const QString& targetPath) const {
+    if (!QFile::exists(getAppsDir())) {
+        if (!QDir::home().mkdir("Applications"))
+            throw appimagelauncher::InstallErrorNoPermissionsOnTarget(
+                    QObject::tr("Not enough permissions to create %1").arg(getAppsDir()));
+    }
+
     if (targetPath != appImagePath) {
         if (QFile::exists(targetPath))
             throw appimagelauncher::InstallErrorTargetAlreadyExists(appImagePath);
@@ -21,7 +27,7 @@ void AppImageServicesInstaller::tryMoveFile(const QString& appImagePath, const Q
         bool res = QFile::rename(appImagePath, targetPath);
         if (!res)
             throw appimagelauncher::InstallErrorNoPermissionsOnTarget(
-                    QObject::tr("Not enough permissions to write %1").arg(appImagePath));
+                    QObject::tr("Not enough permissions to write %1").arg(targetPath));
     }
 }
 
@@ -54,5 +60,7 @@ QString AppImageServicesInstaller::getTargetPathFor(const QString& pathToAppImag
         fileName += "." + appImageInfo.suffix();
     }
 
-    return QDir::homePath() + "/Applications/" + fileName;
+    return getAppsDir() + fileName;
 }
+
+const QString AppImageServicesInstaller::getAppsDir() const { return QDir::homePath() + "/Applications/"; }
