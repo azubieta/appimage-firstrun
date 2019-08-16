@@ -9,7 +9,7 @@ build:arch_pkg:
     - chmod a+rwx build
     - cp -v dist/arch/* build
     - cd build && su build -c "makepkg"
-    - mv AppImageLauncher*.pkg.tar.xz ..
+    - mv appimagelauncher*.pkg.tar.xz ..
   artifacts:
     paths:
-      - AppImageLauncher*.pkg.tar.xz
+      - appimagelauncher*.pkg.tar.xz
