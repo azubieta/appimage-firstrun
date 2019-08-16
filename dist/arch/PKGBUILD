@@ -1,17 +1,17 @@
 # Maintainer: Alexis Lopez Zubieta <contact@azubieta.net>
-projectname=plasma-appimage-integration
+projectname=AppImageLauncher
 
 pkgname="$projectname-git"
 pkgver=0.1.0
 pkgrel=1
 epoch=
-pkgdesc="Plasma AppImage integration extensions"
+pkgdesc="AppImageLauncher using AppImageServices as backend"
 arch=('x86_64')
-url="https://www.opencode.net/azubieta/$projectname"
+url="https://github.com/azubieta/$projectname"
 license=('MIT')
 groups=('appimage')
-depends=('qt5-base' 'kfilemetadata' 'knotifications')
-makedepends=('git' 'cmake' 'kfilemetadata' 'knotifications' 'kdelibs4support')
+depends=('qt5-base')
+makedepends=('git' 'cmake' 'qt5-base')
 checkdepends=()
 optdepends=()
 provides=("$projectname=$pkgver")
@@ -19,9 +19,9 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=plasma-appimage-integration-git.install
+install=AppImageLauncher-git.install
 changelog=
-source=("git+https://www.opencode.net/azubieta/plasma-appimage-integration.git")
+source=("git+https://github.com/azubieta/AppImageLauncher.git")
 sha256sums=('SKIP')
 noextract=()
 validpgpkeys=()
@@ -36,7 +36,7 @@ prepare() {
 build() {
   cd "$srcdir/$projectname"
 
-  cmake -DCMAKE_INSTALL_PREFIX=`kf5-config --prefix` -DCMAKE_BUILD_TYPE=Release .
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .
   make
 }
 
