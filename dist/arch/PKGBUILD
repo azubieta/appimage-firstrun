@@ -2,7 +2,7 @@
 projectname=AppImageLauncher
 
 pkgname="$projectname-git"
-pkgver=0.1.0
+pkgver=0.0.1
 pkgrel=1
 epoch=
 pkgdesc="AppImageLauncher using AppImageServices as backend"
@@ -21,7 +21,7 @@ backup=()
 options=()
 install=AppImageLauncher-git.install
 changelog=
-source=("git+https://github.com/azubieta/AppImageLauncher.git")
+source=("git+https://www.opencode.net/azubieta/appimagelauncher.git")
 sha256sums=('SKIP')
 noextract=()
 validpgpkeys=()

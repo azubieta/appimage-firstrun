@@ -1,0 +1,15 @@
+build:arch_pkg:
+  image: archlinux/base
+  stage: build
+  before_script:
+    - pacman -Sy --noconfirm base-devel cmake git qt5-base
+    - useradd build
+  script:
+    - mkdir build
+    - chmod a+rwx build
+    - cp -v dist/arch/* build
+    - cd build && su build -c "makepkg"
+    - mv AppImageLauncher*.pkg.tar.xz ..
+  artifacts:
+    paths:
+      - AppImageLauncher*.pkg.tar.xz
