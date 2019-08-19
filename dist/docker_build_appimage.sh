@@ -20,3 +20,4 @@ cd docker_build
 
 conan install .. --build missing -s compiler.libcxx=libstdc++11 -s compiler.cppstd=11
 conan build ..
+mv appimage-firstrun* ..
