@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/">
     <file>appimage_logo.svg</file>
+    <file>DejaVuSans.ttf</file>
   </qresource>
 </RCC>

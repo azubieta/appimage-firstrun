@@ -3,6 +3,7 @@
 #include <QMetaObject>
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QtGui/QFontDatabase>
 
 // local
 #include "base/AppImageLauncher.h"
@@ -37,6 +38,11 @@ int main(int argc, char** argv) {
         qCritical("%s", error.what());
         appImageLauncher.showHelp(2);
     }
+
+    QFontDatabase::addApplicationFont(":/DejaVuSans.ttf");
+    QFont appFont("DejaVuSans", 10);
+    app.setFont(appFont);
+
 
     // Execute method on app start
     QMetaObject::invokeMethod(&appImageLauncher, "exec", Qt::QueuedConnection);
