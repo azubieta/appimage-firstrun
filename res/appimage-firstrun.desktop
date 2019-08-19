@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=appimage-firstrun
+Comment=AppImage first run assistant
+TryExec=appimage-firstrun
+Exec=appimage-firstrun
+Icon=appimage_logo
+Categories=Utility;
+NoDisplay=true
+X-AppImage-Integrate=false

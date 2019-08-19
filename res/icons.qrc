@@ -1,5 +1,5 @@
 <RCC>
   <qresource prefix="/">
-    <file>share/icons/hicolor/scalable/apps/AppImageLauncher.svg</file>
+    <file>appimage_logo.svg</file>
   </qresource>
 </RCC>
