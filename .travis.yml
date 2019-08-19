@@ -14,12 +14,15 @@ addons:
 
 matrix:
   include:
+    - env: DOCKER_IMAGE=conanio/gcc48 BUILD_SCRIPT=dist/docker_build_appimage.sh
+      name: "AppImage package build"
     - env: DOCKER_IMAGE=archlinux/base BUILD_SCRIPT=dist/docker_build_arch.sh
       name: "arch package build"
     - env: DOCKER_IMAGE=debian:stable BUILD_SCRIPT=dist/docker_build_deb.sh PKG_VERSION_POSTFIX=debian-stable
       name: "debian stable package build"
     - env: DOCKER_IMAGE=ubuntu:bionic BUILD_SCRIPT=dist/docker_build_deb.sh PKG_VERSION_POSTFIX=ubuntu-bionic
       name: "ubuntu bionic package build"
+
 script:
   - docker run -v $PWD:/sources -w /sources -e PKG_VERSION_POSTFIX="$PKG_VERSION_POSTFIX" "$DOCKER_IMAGE" "$BUILD_SCRIPT"
 

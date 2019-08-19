@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../res/icons.qrc">
-    <normaloff>:/share/icons/hicolor/scalable/apps/AppImageLauncher.svg</normaloff>:/share/icons/scalable/apps/AppImageLauncher.svg</iconset>
+    <normaloff>:/appimage_logo.svg</normaloff>:/appimage_logo.svg</iconset>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -394,7 +394,7 @@ p, li { white-space: pre-wrap; }
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../res/icons.qrc">:/share/icons/hicolor/scalable/apps/AppImageLauncher.svg</pixmap>
+          <pixmap resource="../../res/icons.qrc">:/appimage_logo.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
