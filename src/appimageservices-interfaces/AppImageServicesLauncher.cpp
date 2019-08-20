@@ -22,13 +22,14 @@ void AppImageServicesLauncher::launch(const QString& command, const QStringList&
     process.setArguments(args);
     QProcessEnvironment environment;
     environment.insert("APPIMAGELAUNCHER_DISABLE", "true");
+    environment.insert("KDE_DEBUG", "false");
     process.setEnvironment(environment.toStringList());
 
     argsVector.push_back(command.toLocal8Bit().data());
 
-    if (!process.startDetached(command)) {
-        qFatal("execution failed: %s", command.toLocal8Bit().data());
-    } else
+    if (!process.startDetached(command))
+        qApp->exit(1);
+    else
         qApp->quit();
 }
 
