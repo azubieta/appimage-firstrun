@@ -18,22 +18,18 @@ AppImageServicesLauncher::AppImageServicesLauncher() : launcherInterface(
 
 void AppImageServicesLauncher::launch(const QString& command, const QStringList& args) {
     std::vector<char*> argsVector;
+    QProcess process;
+    process.setArguments(args);
+    QProcessEnvironment environment;
+    environment.insert("APPIMAGELAUNCHER_DISABLE", "true");
+    process.setEnvironment(environment.toStringList());
 
     argsVector.push_back(command.toLocal8Bit().data());
 
-    // copy arguments
-    for (const QString& arg: args)
-        argsVector.push_back(strdup(arg.toLocal8Bit().data()));
-
-    // prevent loop executions
-    qputenv("APPIMAGELAUNCHER_DISABLE", "true");
-
-    // args need to be null terminated
-    argsVector.push_back(nullptr);
-    execv(command.toLocal8Bit().data(), argsVector.data());
-
-    const auto& error = errno;
-    qFatal("execv(%s, [...]) failed: %s", command.toLocal8Bit().data(), strerror(error));
+    if (!process.startDetached(command)) {
+        qFatal("execution failed: %s", command.toLocal8Bit().data());
+    } else
+        qApp->quit();
 }
 
 bool AppImageServicesLauncher::registerApp(const QString& appImagePath) {
