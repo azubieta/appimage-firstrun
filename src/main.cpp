@@ -47,6 +47,5 @@ int main(int argc, char** argv) {
     // Execute method on app start
     QMetaObject::invokeMethod(&appImageLauncher, "exec", Qt::QueuedConnection);
     return QCoreApplication::exec();
-
 }
 

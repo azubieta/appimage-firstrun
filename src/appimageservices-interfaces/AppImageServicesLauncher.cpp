@@ -17,20 +17,24 @@ AppImageServicesLauncher::AppImageServicesLauncher() : launcherInterface(
                                                   QDBusConnection::sessionBus())) {}
 
 void AppImageServicesLauncher::launch(const QString& command, const QStringList& args) {
-    std::vector<char*> argsVector;
-    QProcess process;
-    process.setArguments(args);
-    QProcessEnvironment environment;
-    environment.insert("APPIMAGELAUNCHER_DISABLE", "true");
-    environment.insert("KDE_DEBUG", "false");
-    process.setEnvironment(environment.toStringList());
+    auto process = new QProcess();
+    process->setProgram(command);
+    process->setArguments(args);
 
-    argsVector.push_back(command.toLocal8Bit().data());
+    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    environment.insert("APPIMAGELAUNCHER_DISABLE", "True");
+    environment.insert("KDE_DEBUG", "False");
+    environment.insert("DESKTOPINTEGRATION", "False");
+    process->setEnvironment(environment.toStringList());
 
-    if (!process.startDetached(command))
-        qApp->exit(1);
+    qDebug() << "Launching: " << command << args;
+    qDebug() << "Launch environment: " << environment.toStringList();
+
+    qint64 pid;
+    if (process->startDetached(&pid))
+        qApp->exit();
     else
-        qApp->quit();
+        qApp->exit(-1);
 }
 
 bool AppImageServicesLauncher::registerApp(const QString& appImagePath) {
