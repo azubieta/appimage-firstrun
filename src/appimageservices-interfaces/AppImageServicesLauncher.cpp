@@ -27,11 +27,13 @@ void AppImageServicesLauncher::launch(const QString& command, const QStringList&
     environment.insert("DESKTOPINTEGRATION", "False");
     process->setEnvironment(environment.toStringList());
 
-    qDebug() << "Launching: " << command << args;
-    qDebug() << "Launch environment: " << environment.toStringList();
+    qDebug() << "Launching: " << command << args.join(" ");
+    qDebug() << "Launch environment:";
+    for (const QString& entry : environment.toStringList())
+        qDebug() << entry;
+    qDebug() << "\n";
 
-    qint64 pid;
-    if (process->startDetached(&pid))
+    if (process->startDetached())
         qApp->exit();
     else
         qApp->exit(-1);
